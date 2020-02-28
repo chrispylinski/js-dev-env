@@ -4,8 +4,10 @@
   "description": "JS development environment kit",
   "scripts": {
     "prestart": "babel-node buildScripts/startMessage.js",
-    "start": "npm-run-all --parallel open:src",
+    "start": "npm-run-all --parallel open:src lint:watch",
     "open:src": "babel-node buildScripts/srcServer.js",
+    "lint": "esw webpack.config.* src buildScripts --color",
+    "lint:watch": "npm run lint -- --watch",
     "localtunnel": "lt --port 3000",
     "share": "npm-run-all --parallel open:src localtunnel"
   },
