@@ -12,7 +12,6 @@
     "share": "npm-run-all --parallel open:src localtunnel"
   },
   "author": "Chris Pylinski",
-  "license": "MIT",
   "dependencies": {
     "whatwg-fetch": "1.0.0"
   },
