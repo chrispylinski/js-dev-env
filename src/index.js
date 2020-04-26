@@ -1,8 +1,20 @@
 // This is the APPS ENTRY POINT
 import "./index.css";
-import numeral from "numeral";
+import { getUsers } from "./api/userApi";
 
-const courseValue = numeral(1000).format("$0,0.00");
-//debugger;
+// Populate talbe of users via API call.
+getUsers().then((result) => {
+  let usersBody = "";
 
-console.log(`I would pay ${courseValue} for this awesome course!`); // eslint-disable-line no-console
+  result.forEach((user) => {
+    usersBody += `<tr>
+      <td><a href="#" data-id="${user.id}" class="deleteUser">Delete</a></td>
+      <td>${user.id}</td>
+      <td>${user.firstName}</td>
+      <td>${user.lastName}</td>
+      <td>${user.email}</td>
+      </tr>`;
+  });
+
+  global.document.getElementById("users").innerHTML = usersBody; // this will populate "users" table body in index.html
+});

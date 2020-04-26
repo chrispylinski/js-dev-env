@@ -9,7 +9,7 @@ describe("Our first test", () => {
 });
 
 describe("index.html", () => {
-  it("should say hello", (done) => {
+  it("should have h1 that says Users", (done) => {
     // async call thats why done parameter is needed here
     // get reference to index.html file
     const index = fs.readFileSync("./src/index.html", "utf-8");
@@ -18,7 +18,7 @@ describe("index.html", () => {
     jsdom.env(index, function (err, window) {
       // second parameter is for any JS files
       const h1 = window.document.getElementsByTagName("h1")[0];
-      expect(h1.innerHTML).to.equal("Hello World!");
+      expect(h1.innerHTML).to.equal("Users");
       done(); // tell Mocha here that our Test is done.
       window.close(); // to free up memory when we created DOM
     });
