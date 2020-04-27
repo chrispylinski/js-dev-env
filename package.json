@@ -4,14 +4,17 @@
   "description": "JS development environment kit",
   "scripts": {
     "prestart": "babel-node buildScripts/startMessage.js",
-    "start": "npm-run-all --parallel open:src lint:watch test:watch",
+    "start": "npm-run-all --parallel open:src lint:watch test:watch start-mockapi",
     "open:src": "babel-node buildScripts/srcServer.js",
     "lint": "esw webpack.config.* src buildScripts --color",
     "lint:watch": "npm run lint -- --watch",
     "localtunnel": "lt --port 3000",
     "share": "npm-run-all --parallel open:src localtunnel",
     "test": "mocha --reporter progress buildScripts/testSetup.js \"src/**/*.test.js\"",
-    "test:watch": "npm run test -- --watch"
+    "test:watch": "npm run test -- --watch",
+    "generate-mock-data": "babel-node buildScripts/generateMockData",
+    "prestart-mockapi": "npm run generate-mock-data",
+    "start-mockapi": "json-server --watch src/api/db.json --port 3001"
   },
   "author": "Chris Pylinski",
   "dependencies": {
@@ -36,7 +39,7 @@
     "extract-text-webpack-plugin": "1.0.1",
     "html-webpack-plugin": "2.22.0",
     "jsdom": "9.8.0",
-    "json-schema-faker": "^0.4.7",
+    "json-schema-faker": "0.3.6",
     "json-server": "^0.16.1",
     "localtunnel": "1.8.1",
     "mocha": "3.1.2",
@@ -48,7 +51,7 @@
     "rimraf": "2.5.4",
     "style-loader": "0.13.1",
     "surge": "0.20.4",
-    "webpack": "1.13.2",
+    "webpack": "^1.13.2",
     "webpack-dev-middleware": "1.8.4",
     "webpack-hot-middleware": "2.13.0",
     "webpack-md5-hash": "0.0.5"

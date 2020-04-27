@@ -9,14 +9,14 @@ export default {
   output: {
     path: path.resolve(__dirname, "src"),
     publicPath: "/",
-    filename: "bundle.js"
+    filename: "bundle.js",
   },
   plugins: [], // e.g. hot reloading
   module: {
     // telling webpack what files to consider
     loaders: [
       { test: /\.js$/, exclude: /node_modules/, loaders: ["babel"] }, // handle JS files
-      { test: /\.css$/, loaders: ["style", "css"] } // handle CSS files
-    ]
-  }
+      { test: /\.css$/, loaders: ["style", "css"] }, // handle CSS files
+    ],
+  },
 };
