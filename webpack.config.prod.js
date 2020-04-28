@@ -18,6 +18,19 @@ export default {
     // so don't have to do this manually <script> src="bundle.js </script>
     new HtmlWebpackPlugin({
       template: "src/index.html",
+      // this will help also minify HTML
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeRedundantAttributes: true,
+        useShortDoctype: true,
+        removeEmptyAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        keepClosingSlash: true,
+        minifyJS: true,
+        minifyCSS: true,
+        minifyURLs: true,
+      },
       inject: true, // tells webpack to add scripts
     }),
     // Eliminate duplicate packages when generating bundle

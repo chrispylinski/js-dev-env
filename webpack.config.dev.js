@@ -1,4 +1,5 @@
 import path from "path";
+import HtmlWebpackPlugin from "html-webpack-plugin";
 
 export default {
   debug: true, // enables debug information
@@ -11,7 +12,13 @@ export default {
     publicPath: "/",
     filename: "bundle.js",
   },
-  plugins: [], // e.g. hot reloading
+  plugins: [
+    // Create HTML file that includes reference to bundled JS.
+    new HtmlWebpackPlugin({
+      template: "src/index.html",
+      inject: true, // tells webpack to add scripts
+    }),
+  ], // e.g. hot reloading
   module: {
     // telling webpack what files to consider
     loaders: [
