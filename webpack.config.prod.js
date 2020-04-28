@@ -1,5 +1,6 @@
 import path from "path";
 import webpack from "webpack";
+import HtmlWebpackPlugin from "html-webpack-plugin";
 
 export default {
   debug: true, // enables debug information
@@ -13,6 +14,12 @@ export default {
     filename: "bundle.js",
   },
   plugins: [
+    // Create HTML file that includes reference to bundled JS.
+    // so don't have to do this manually <script> src="bundle.js </script>
+    new HtmlWebpackPlugin({
+      template: "src/index.html",
+      inject: true, // tells webpack to add scripts
+    }),
     // Eliminate duplicate packages when generating bundle
     new webpack.optimize.DedupePlugin(),
     // Minify JS
