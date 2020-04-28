@@ -2,7 +2,6 @@
 import webpack from "webpack";
 import webpackConfig from "../webpack.config.prod";
 import chalk from "chalk";
-import { json } from "express";
 
 process.env.NODE_ENV = "production"; // important for modules like Babbel
 
@@ -22,7 +21,7 @@ webpack(webpackConfig).run((err, stats) => {
   const jsonStats = stats.toJson();
 
   if (jsonStats.hasError) {
-    return jsonStats.errors.map((error) => console.log(chalk.red(err0r)));
+    return jsonStats.errors.map((error) => console.log(chalk.red(error)));
   }
 
   if (jsonStats.hasWarnings) {
