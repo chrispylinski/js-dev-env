@@ -14,7 +14,7 @@ export default {
   output: {
     path: path.resolve(__dirname, "dist"), // dist = distribution folder
     publicPath: "/",
-    filename: "bundle.js",
+    filename: "[name].js", // this helps that webpack creates a main.js and a vendor.js
   },
   plugins: [
     // Use CommonsChunkPlugin to create a separate bundle
