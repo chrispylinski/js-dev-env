@@ -6,7 +6,10 @@ export default {
   debug: true, // enables debug information
   devtool: "source-map", // source-map, longer build but better for debuggin in browser
   noInfo: false, // webpack will list of files its bundling, usually off==false bc it has a lot of noise
-  entry: [path.resolve(__dirname, "src/index")], // THIS IS THE APP ENTRY POINT
+  entry: {
+    vendor: path.resolve(__dirname, "src/vendor"),
+    main: path.resolve(__dirname, "src/index"),
+  }, // THIS IS THE APP ENTRY POINT
   target: "web", // we target the web or Node if Node needs to work with it instead of the web
   output: {
     path: path.resolve(__dirname, "dist"), // dist = distribution folder
@@ -14,6 +17,11 @@ export default {
     filename: "bundle.js",
   },
   plugins: [
+    // Use CommonsChunkPlugin to create a separate bundle
+    // of vendor libraries so taht they're cached separately.
+    new webpack.optimize.CommonsChunkPlugin({
+      name: "vendor", // corresponds with entry point above! Webpack calls them Chunk but it's the same as Bundle, so Bundle == Chunk
+    }),
     // Create HTML file that includes reference to bundled JS.
     // so don't have to do this manually <script> src="bundle.js </script>
     new HtmlWebpackPlugin({
