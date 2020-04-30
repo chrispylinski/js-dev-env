@@ -1,6 +1,8 @@
 import path from "path";
 import webpack from "webpack";
 import HtmlWebpackPlugin from "html-webpack-plugin";
+import WebpackMd5Hash from "webpack-md5-hash"; // used for Cache Busting
+import ExtractTextPlugin from "extract-text-webpack-plugin";
 
 export default {
   debug: true, // enables debug information
@@ -14,14 +16,21 @@ export default {
   output: {
     path: path.resolve(__dirname, "dist"), // dist = distribution folder
     publicPath: "/",
-    filename: "[name].js", // this helps that webpack creates a main.js and a vendor.js
+    filename: "[name].[chunkhash].js", // this helps that webpack creates a main.3452345.js and a vendor.34534js
   },
   plugins: [
+    // Generate an external css file with a hash in the filename
+    new ExtractTextPlugin("[name].[contenthash].css"),
+
+    // Hash the files using MD5 so that their names change when the content changes.
+    new WebpackMd5Hash(),
+
     // Use CommonsChunkPlugin to create a separate bundle
     // of vendor libraries so taht they're cached separately.
     new webpack.optimize.CommonsChunkPlugin({
       name: "vendor", // corresponds with entry point above! Webpack calls them Chunk but it's the same as Bundle, so Bundle == Chunk
     }),
+
     // Create HTML file that includes reference to bundled JS.
     // so don't have to do this manually <script> src="bundle.js </script>
     new HtmlWebpackPlugin({
@@ -40,6 +49,9 @@ export default {
         minifyURLs: true,
       },
       inject: true, // tells webpack to add scripts
+      // Properties that are defined here are available in index.html
+      // using htmlWebpackPlugin.options.varName
+      trackJSToken: "fae6a9d62ab346b58f336553fe266953",
     }),
     // Eliminate duplicate packages when generating bundle
     new webpack.optimize.DedupePlugin(),
@@ -50,7 +62,7 @@ export default {
     // telling webpack what files to consider
     loaders: [
       { test: /\.js$/, exclude: /node_modules/, loaders: ["babel"] }, // handle JS files
-      { test: /\.css$/, loaders: ["style", "css"] }, // handle CSS files
+      { test: /\.css$/, loader: ExtractTextPlugin.extract("css?sourceMap") }, // handle CSS files
     ],
   },
 };
