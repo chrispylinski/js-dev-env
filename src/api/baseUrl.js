@@ -3,7 +3,7 @@ export default function getBaseUrl() {
   //return inDevelopment ? "http://localhost:3001/" : "/"; // dev : production
   return getQueryStringParameterByName("useMockApi")
     ? "http://localhost:3001/"
-    : "/"; // real api hosted by express
+    : "https://sheltered-bastion-82899.herokuapp.com/"; // real api hosted by express
 }
 
 // plain JS to get single parameter
